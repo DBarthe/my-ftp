@@ -5,7 +5,7 @@
 ## Login   <delemo_b@epitech.net>
 ## 
 ## Started on Tue Apr  8 11:52:09 2014 Barthelemy Delemotte
-## Last update Tue Apr  8 17:48:26 2014 Barthelemy Delemotte
+## Last update Tue Apr  8 19:02:35 2014 Barthelemy Delemotte
 ##
 
 DEBUG ?= 1
@@ -39,7 +39,7 @@ CLI_SRC = $(wildcard $(CLI_SRCPATH)/*.c) \
 SERV_OBJ = $(SERV_SRC:.c=.o)
 CLI_OBJ = $(CLI_SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra $(INCLUDES)
+CFLAGS = -Wall -Wextra  $(INCLUDES)
 DBGFLAGS = -ggdb3 -DDEBUG
 NDBGFLAGS = -DNDEBUG
 OFLAGS = -O3
