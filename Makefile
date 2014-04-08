@@ -5,7 +5,7 @@
 ## Login   <delemo_b@epitech.net>
 ## 
 ## Started on Tue Apr  8 11:52:09 2014 Barthelemy Delemotte
-## Last update Tue Apr  8 15:37:08 2014 Barthelemy Delemotte
+## Last update Tue Apr  8 17:48:26 2014 Barthelemy Delemotte
 ##
 
 DEBUG ?= 1
@@ -28,8 +28,13 @@ SERV_INCLUDES = -I $(COMMON_INCPATH) -I $(SERV_INCPATH)
 CLI_INLCUDES = -I $(COMMON_INCPATH) -I $(CLI_INCPATH)
 INCLUDES =
 
-SERV_SRC = $(wildcard $(SERV_SRCPATH)/*.c) $(wildcard $(COMMON_SRCPATH)/*.c)
-CLI_SRC = $(wildcard $(CLI_SRCPATH)/*.c) $(wildcard $(COMMON_SRCPATH)/*.c)
+SERV_SRC = $(wildcard $(SERV_SRCPATH)/*.c) 	\
+	$(wildcard $(SERV_SRCPATH)/*/*.c)	\
+	$(wildcard $(COMMON_SRCPATH)/*.c)
+
+CLI_SRC = $(wildcard $(CLI_SRCPATH)/*.c) \
+	$(wildcard $(CLI_SRCPATH)/*/*.c) \
+	$(wildcard $(COMMON_SRCPATH)/*.c)
 
 SERV_OBJ = $(SERV_SRC:.c=.o)
 CLI_OBJ = $(CLI_SRC:.c=.o)
