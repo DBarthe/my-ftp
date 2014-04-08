@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 17:41:47 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 17:42:29 2014 Barthelemy Delemotte
+** Last update Tue Apr  8 18:40:58 2014 Barthelemy Delemotte
 */
 
 #include		<unistd.h>
@@ -33,6 +33,7 @@ void			swing_feed(t_swing *self, int fd)
   ssize_t		ret;
   size_t		i;
 
+  DEBUG_PRINT("swing feeding");
   ret = read(fd, buffer, SWING_FEED_SIZE);
   if (ret < 0)
     diep("read");
