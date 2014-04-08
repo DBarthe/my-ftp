@@ -5,13 +5,14 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 18:16:25 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 18:41:27 2014 Barthelemy Delemotte
+** Last update Tue Apr  8 19:15:09 2014 Barthelemy Delemotte
 */
 
 #include		<stdlib.h>
 #include		<stdio.h>
 
 #include		"session.h"
+#include		"socket.h"
 
 static char		*session_fetch_cmd(t_session *self)
 {
@@ -31,6 +32,7 @@ void			session_run(t_session *self)
       cmd = session_fetch_cmd(self);
       /*cmd_exec(cmd, self);*/
       printf("cmd=[%s]\n", cmd);
+      send_fmt(self->fd, "[ERROR] %d\n", self->fd);
       free(cmd);
     }
 }
