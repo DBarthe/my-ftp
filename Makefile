@@ -5,8 +5,10 @@
 ## Login   <delemo_b@epitech.net>
 ## 
 ## Started on Tue Apr  8 11:52:09 2014 Barthelemy Delemotte
-## Last update Tue Apr  8 12:03:39 2014 Barthelemy Delemotte
+## Last update Tue Apr  8 15:37:08 2014 Barthelemy Delemotte
 ##
+
+DEBUG ?= 1
 
 CC ?= gcc
 
