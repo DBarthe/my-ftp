@@ -5,20 +5,13 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 15:20:11 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 16:29:03 2014 Barthelemy Delemotte
+** Last update Wed Apr  9 17:00:30 2014 Barthelemy Delemotte
 */
 
 #include		<stdlib.h>
 #include		<stdio.h>
 
 #include		"cmd.h"
-
-bool			cmd_exec(t_cmd *self, t_session *session)
-{
-  (void)self;
-  (void)session;
-  return (true);
-}
 
 void			cmd_clean(t_cmd *self)
 {
