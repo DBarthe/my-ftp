@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 15:12:18 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 17:39:47 2014 Barthelemy Delemotte
+** Last update Wed Apr  9 17:50:39 2014 Barthelemy Delemotte
 */
 
 #ifndef			CMD_H_
@@ -17,7 +17,6 @@
 
 # define		CMD_IS_SEP(c)	((c) == ' ' || (c) == '\t')
 # define		CMD_IS_INHIB(c)	((c) == '\'' || (c) == '\"')
-
 
 typedef	struct
 {

@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 17:53:03 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 15:30:15 2014 Barthelemy Delemotte
+** Last update Wed Apr  9 18:00:24 2014 Barthelemy Delemotte
 */
 
 #ifndef			SESSION_H_
@@ -20,6 +20,7 @@ typedef	struct
   int			fd;
   t_swing		swing;
   bool			quit;
+  char			*root;
 }			t_session;
 
 void			session_ctor(t_session *self, int cli_fd);
