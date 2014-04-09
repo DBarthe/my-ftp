@@ -5,14 +5,15 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 18:16:25 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 19:15:09 2014 Barthelemy Delemotte
+** Last update Wed Apr  9 16:31:26 2014 Barthelemy Delemotte
 */
 
 #include		<stdlib.h>
 #include		<stdio.h>
 
 #include		"session.h"
-#include		"socket.h"
+#include		"cmd.h"
+#include		"defines.h"
 
 static char		*session_fetch_cmd(t_session *self)
 {
@@ -25,14 +26,21 @@ static char		*session_fetch_cmd(t_session *self)
 
 void			session_run(t_session *self)
 {
-  char			*cmd;
+  t_cmd			cmd;
+  char			*cmd_raw;
 
   while (!self->quit)
     {
-      cmd = session_fetch_cmd(self);
-      /*cmd_exec(cmd, self);*/
-      printf("cmd=[%s]\n", cmd);
-      send_fmt(self->fd, "[ERROR] %d\n", self->fd);
-      free(cmd);
+      cmd_raw = session_fetch_cmd(self);
+      DEBUG_PRINT("new command");
+      printf("cmd=[%s]\n", cmd_raw);
+      if (cmd_parse(&cmd, cmd_raw, self))
+	(void)cmd_exec(&cmd, self);
+      else
+	{
+	  DEBUG_PRINT("command parsing failed");
+	}
+      cmd_dump(&cmd);
+      cmd_clean(&cmd);
     }
 }

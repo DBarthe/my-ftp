@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 17:53:03 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 18:41:24 2014 Barthelemy Delemotte
+** Last update Wed Apr  9 15:30:15 2014 Barthelemy Delemotte
 */
 
 #ifndef			SESSION_H_
