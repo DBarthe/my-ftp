@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Thu Apr 10 13:27:17 2014 Barthelemy Delemotte
-** Last update Thu Apr 10 13:32:43 2014 Barthelemy Delemotte
+** Last update Thu Apr 10 14:11:24 2014 Barthelemy Delemotte
 */
 
 #define			_GNU_SOURCE
@@ -27,16 +27,41 @@ bool			cmd_exec_ls(t_cmd *self, t_session *session)
   return (true);
 }
 
+static bool		cd_error(t_session *session, const char *prefix)
+{
+  send_str(session->fd, "[ERROR] failed to change directory\n");
+  if (prefix)
+    perror("getcwd");
+  return (false);
+}
+
 bool			cmd_exec_cd(t_cmd *self, t_session *session)
 {
-  if (chdir(self->arg ? self->arg : session->root) == 0)
-    send_str(session->fd, "[SUCCESS] directory successfully changed\n");
-  else
+  char			*old_cwd;
+  char			*new_cwd;
+  bool			ret;
+
+  old_cwd = NULL;
+  new_cwd = NULL;
+  ret = true;
+  if ((old_cwd = get_current_dir_name()) == NULL)
+    ret = cd_error(session, "getcwd");
+  else if (chdir(self->arg ? self->arg : session->root) == 0)
     {
-      send_str(session->fd, "[ERROR] failed to change directory\n");
-      return (false);
+      if ((new_cwd = get_current_dir_name()) == NULL ||
+	  strncmp(new_cwd, session->root, strlen(session->root)) != 0)
+	{
+	  (void)chdir(old_cwd);
+	  ret = cd_error(session, NULL);
+	}
+      else
+	send_str(session->fd, "[SUCCESS] directory successfully changed\n");
     }
-  return (true);
+  else
+    cd_error(session, NULL);
+  free(old_cwd);
+  free(new_cwd);
+  return (ret);
 }
 
 bool			cmd_exec_pwd(t_cmd *self, t_session *session)
