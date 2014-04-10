@@ -5,49 +5,20 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 17:00:14 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 18:00:29 2014 Barthelemy Delemotte
+** Last update Thu Apr 10 13:29:16 2014 Barthelemy Delemotte
 */
 
-#include		<unistd.h>
 #include		<string.h>
 
 #include		"cmd.h"
 #include		"socket.h"
 
-static bool		cmd_exec_ls(t_cmd *self, t_session *session)
-{
-  (void)self;
-  cmd_exec_system("ls -l", session);
-  return (true);
-}
-static bool		cmd_exec_cd(t_cmd *self, t_session *session)
-{
-  if (chdir(self->arg ? self->arg : session->root) == 0)
-    {
-      send_str(session->fd, "[SUCCESS] directory successfully changed\n");
-    }
-  else
-    {
-      send_str(session->fd, "[ERROR] failed to change directory\n");
-    }
-  return (true);
-}
 static bool		cmd_exec_get(t_cmd *self, t_session *session)
 {
   (void)self; (void)session;
   return (true);
 }
 static bool		cmd_exec_put(t_cmd *self, t_session *session)
-{
-  (void)self; (void)session;
-  return (true);
-}
-static bool		cmd_exec_pwd(t_cmd *self, t_session *session)
-{
-  (void)self; (void)session;
-  return (true);
-}
-static bool		cmd_exec_quit(t_cmd *self, t_session *session)
 {
   (void)self; (void)session;
   return (true);

@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 15:12:18 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 17:50:39 2014 Barthelemy Delemotte
+** Last update Thu Apr 10 13:29:54 2014 Barthelemy Delemotte
 */
 
 #ifndef			CMD_H_
@@ -30,5 +30,9 @@ bool			cmd_exec(t_cmd *self, t_session *session);
 void			cmd_clean(t_cmd *self);
 void			cmd_dump(const t_cmd *self);
 bool			cmd_exec_system(const char *cmd, t_session *session);
+bool			cmd_exec_ls(t_cmd *self, t_session *session);
+bool			cmd_exec_cd(t_cmd *self, t_session *session);
+bool			cmd_exec_pwd(t_cmd *self, t_session *session);
+bool			cmd_exec_quit(t_cmd *self, t_session *session);
 
 #endif			/* !CMD_H_ */

@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 17:17:26 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 17:48:57 2014 Barthelemy Delemotte
+** Last update Thu Apr 10 13:15:32 2014 Barthelemy Delemotte
 */
 
 #include		<unistd.h>
@@ -47,6 +47,7 @@ static void		cmd_send_output(t_session *session, int in)
 
   while ((ret = read(in, buffer, 256)) > 0)
     send_raw(session->fd, buffer, ret);
+  send_str(session->fd, "[SUCCESS] directory send OK\n");
 }
 
 bool			cmd_exec_system(const char *cmd, t_session *session)
