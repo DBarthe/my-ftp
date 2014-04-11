@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 18:52:57 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 19:02:16 2014 Barthelemy Delemotte
+** Last update Fri Apr 11 21:03:01 2014 Barthelemy Delemotte
 */
 
 #include		<stdio.h>
@@ -36,4 +36,12 @@ bool			send_fmt(int socket_fd, const char *fmt, ...)
   vsnprintf(buffer, sizeof(buffer), fmt, ap);
   va_end(ap);
   return (send_str(socket_fd, buffer));
+}
+
+bool			send_eot(int socket_fd)
+{
+  unsigned char		eot;
+
+  eot = 0xff;
+  return (send_raw(socket_fd, (char *)&eot, 1));
 }

@@ -5,7 +5,7 @@
 ## Login   <delemo_b@epitech.net>
 ## 
 ## Started on Tue Apr  8 11:52:09 2014 Barthelemy Delemotte
-## Last update Tue Apr  8 19:02:35 2014 Barthelemy Delemotte
+## Last update Fri Apr 11 20:16:23 2014 Barthelemy Delemotte
 ##
 
 DEBUG ?= 1
@@ -25,7 +25,7 @@ SERV_SRCPATH = $(SERV_PATH)/src
 CLI_SRCPATH = $(CLI_PATH)/src
 
 SERV_INCLUDES = -I $(COMMON_INCPATH) -I $(SERV_INCPATH)
-CLI_INLCUDES = -I $(COMMON_INCPATH) -I $(CLI_INCPATH)
+CLI_INCLUDES = -I $(COMMON_INCPATH) -I $(CLI_INCPATH)
 INCLUDES =
 
 SERV_SRC = $(wildcard $(SERV_SRCPATH)/*.c) 	\
