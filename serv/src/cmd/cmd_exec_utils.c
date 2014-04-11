@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Thu Apr 10 13:27:17 2014 Barthelemy Delemotte
-** Last update Thu Apr 10 14:11:24 2014 Barthelemy Delemotte
+** Last update Fri Apr 11 18:25:59 2014 Barthelemy Delemotte
 */
 
 #define			_GNU_SOURCE
@@ -19,9 +19,20 @@
 
 bool			cmd_exec_ls(t_cmd *self, t_session *session)
 {
-  (void)self;
+  char			*sys_arg;
+
   if (self->arg && strcmp(self->arg, "-a") == 0)
     cmd_exec_system("ls -l --color -a", session);
+  else if (self->arg)
+    {
+      sys_arg = malloc((strlen(self->arg) +
+			strlen("ls -l --color ") + 1) * sizeof(char));
+      if (sys_arg == NULL)
+	return (false);
+      strcpy(sys_arg, "ls -l --color ");
+      strcat(sys_arg, self->arg);
+      cmd_exec_system(sys_arg, session);
+    }
   else
     cmd_exec_system("ls -l --color", session);
   return (true);
