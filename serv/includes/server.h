@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 14:34:11 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 15:36:43 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 14:38:06 2014 Barthelemy Delemotte
 */
 
 #ifndef			SERVER_H_
@@ -27,4 +27,4 @@ void			server_setup(t_server *self, uint16_t port,
 				     t_accept_callback callback);
 void			server_run(t_server *self);
 
-#endif		/* SERVER_H_ */
+#endif			/* !SERVER_H_ */

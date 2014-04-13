@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 16:19:22 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 17:40:00 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 13:36:41 2014 Barthelemy Delemotte
 */
 
 #ifndef			SWING_H_
@@ -29,7 +29,7 @@ typedef	struct
 
 void			swing_ctor(t_swing *self);
 void			swing_dtor(t_swing *self);
-void			swing_feed(t_swing *self, int fd);
+bool			swing_feed(t_swing *self, int fd);
 bool			swing_is_cmd_available(const t_swing *self);
 char			*swing_pull_cmd(t_swing *self);
 char			*swing_pull_rest(t_swing *self, size_t *size);

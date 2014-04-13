@@ -5,11 +5,12 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 16:36:07 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 17:44:01 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 14:21:52 2014 Barthelemy Delemotte
 */
 
 #include		<unistd.h>
 #include		<stdlib.h>
+#include		<stdio.h>
 #include		<string.h>
 
 #include		"swing.h"

@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 12:07:45 2014 Barthelemy Delemotte
-** Last update Thu Apr 10 13:53:32 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 13:55:17 2014 Barthelemy Delemotte
 */
 
 #include		<unistd.h>
@@ -24,11 +24,16 @@ static void		accept_callback(int fd)
   session_dtor(&session);
 }
 
-int			main(/*int ac, char **av*/void)
+int			main(int ac, char **av)
 {
   t_server		server;
 
-  server_setup(&server, 4242, &accept_callback);
+  if (ac < 2)
+    {
+      fprintf(stderr, "usage: %s port_no\n", av[0]);
+      exit(EXIT_FAILURE);
+    }
+  server_setup(&server, atoi(av[1]), &accept_callback);
   server_run(&server);
   return (EXIT_SUCCESS);
 }

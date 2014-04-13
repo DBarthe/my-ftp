@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 18:52:57 2014 Barthelemy Delemotte
-** Last update Fri Apr 11 21:03:01 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 14:23:23 2014 Barthelemy Delemotte
 */
 
 #include		<stdio.h>
@@ -16,26 +16,38 @@
 #include		"utils.h"
 #include		"socket.h"
 
-bool			send_str(int socket_fd, const char *str)
-{
-  return (write(socket_fd, str, strlen(str)) == -1 ? false : true);
-}
-
 bool			send_raw(int socket_fd, const char *buffer,
 				 size_t size)
 {
-  return (write(socket_fd, buffer, size) == -1 ? false : true);
+  ssize_t		ret;
+
+  ret = 0;
+  while (size > 0 && (ret = write(socket_fd, buffer, size)) > 0)
+    {
+      buffer += ret;
+      size -= (size_t)ret;
+    }
+  return (ret == -1 ? false : true);
 }
+
+
+bool			send_str(int socket_fd, const char *str)
+{
+  return (send_raw(socket_fd, str, strlen(str)) == -1 ? false : true);
+}
+
 
 bool			send_fmt(int socket_fd, const char *fmt, ...)
 {
-  static char		buffer[1024];
+  static char		buffer[1024 + 1];
   va_list		ap;
+  int			ret;
 
   va_start(ap, fmt);
-  vsnprintf(buffer, sizeof(buffer), fmt, ap);
+  ret = vsnprintf(buffer, sizeof(buffer), fmt, ap);
   va_end(ap);
-  return (send_str(socket_fd, buffer));
+  return (ret < 0 ? false :  send_raw(socket_fd, buffer,
+				      ret > 1024 ? 1024 : ret));
 }
 
 bool			send_eot(int socket_fd)

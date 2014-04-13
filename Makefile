@@ -5,10 +5,10 @@
 ## Login   <delemo_b@epitech.net>
 ## 
 ## Started on Tue Apr  8 11:52:09 2014 Barthelemy Delemotte
-## Last update Fri Apr 11 20:16:23 2014 Barthelemy Delemotte
+## Last update Sun Apr 13 15:10:15 2014 Barthelemy Delemotte
 ##
 
-DEBUG ?= 1
+DEBUG ?= 0
 
 CC ?= gcc
 
@@ -28,13 +28,29 @@ SERV_INCLUDES = -I $(COMMON_INCPATH) -I $(SERV_INCPATH)
 CLI_INCLUDES = -I $(COMMON_INCPATH) -I $(CLI_INCPATH)
 INCLUDES =
 
-SERV_SRC = $(wildcard $(SERV_SRCPATH)/*.c) 	\
-	$(wildcard $(SERV_SRCPATH)/*/*.c)	\
-	$(wildcard $(COMMON_SRCPATH)/*.c)
+COMMON_SRC =	$(COMMON_PATH)/src/socket.c \
+		$(COMMON_PATH)/src/my_str_to_wordtab.c \
+		$(COMMON_PATH)/src/die.c \
+		$(COMMON_PATH)/src/receiv_file.c \
+		$(COMMON_PATH)/src/send_file.c
 
-CLI_SRC = $(wildcard $(CLI_SRCPATH)/*.c) \
-	$(wildcard $(CLI_SRCPATH)/*/*.c) \
-	$(wildcard $(COMMON_SRCPATH)/*.c)
+SERV_SRC = 	$(SERV_PATH)/src/cmd/cmd_exec_utils.c \
+		$(SERV_PATH)/src/cmd/cmd_exec_system.c \
+		$(SERV_PATH)/src/cmd/cmd_exec.c \
+		$(SERV_PATH)/src/cmd/cmd_parse.c \
+		$(SERV_PATH)/src/cmd/cmd.c \
+		$(SERV_PATH)/src/session/session.c \
+		$(SERV_PATH)/src/session/session_run.c \
+		$(SERV_PATH)/src/server/server.c \
+		$(SERV_PATH)/src/swing/swing.c \
+		$(SERV_PATH)/src/swing/swing_pull.c \
+		$(SERV_PATH)/src/swing/swing_feed.c \
+		$(SERV_PATH)/src/main.c \
+		$(COMMON_SRC)
+
+CLI_SRC =	$(CLI_PATH)/src/client.c \
+		$(CLI_PATH)/src/main.c \
+		$(COMMON_SRC)
 
 SERV_OBJ = $(SERV_SRC:.c=.o)
 CLI_OBJ = $(CLI_SRC:.c=.o)

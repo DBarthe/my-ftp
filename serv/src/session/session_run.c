@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 18:16:25 2014 Barthelemy Delemotte
-** Last update Wed Apr  9 16:31:26 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 15:14:02 2014 Barthelemy Delemotte
 */
 
 #include		<stdlib.h>
@@ -14,12 +14,17 @@
 #include		"session.h"
 #include		"cmd.h"
 #include		"defines.h"
+#include		"socket.h"
 
 static char		*session_fetch_cmd(t_session *self)
 {
   while (!swing_is_cmd_available(&self->swing))
     {
-      swing_feed(&self->swing, self->fd);
+      if (swing_feed(&self->swing, self->fd) == false)
+	{
+	  self->quit = true;
+	  return (NULL);
+	}
     }
   return (swing_pull_cmd(&self->swing));
 }
@@ -31,16 +36,19 @@ void			session_run(t_session *self)
 
   while (!self->quit)
     {
-      cmd_raw = session_fetch_cmd(self);
-      DEBUG_PRINT("new command");
-      printf("cmd=[%s]\n", cmd_raw);
-      if (cmd_parse(&cmd, cmd_raw, self))
-	(void)cmd_exec(&cmd, self);
-      else
+      if ((cmd_raw = session_fetch_cmd(self)))
 	{
-	  DEBUG_PRINT("command parsing failed");
+	  DEBUG_PRINT("new command");
+	  if (cmd_parse(&cmd, cmd_raw, self))
+	    (void)cmd_exec(&cmd, self);
+	  else
+	    {
+	      DEBUG_PRINT("command parsing failed");
+	    }
+	  send_eot(self->fd);
+	  cmd_clean(&cmd);
 	}
-      cmd_dump(&cmd);
-      cmd_clean(&cmd);
+      else
+	printf("connexion interupted\n");
     }
 }

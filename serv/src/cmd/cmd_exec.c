@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Wed Apr  9 17:00:14 2014 Barthelemy Delemotte
-** Last update Fri Apr 11 21:48:15 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 12:51:39 2014 Barthelemy Delemotte
 */
 
 #include		<string.h>
@@ -72,7 +72,6 @@ static bool		cmd_switch(t_cmd *self, t_session *session)
       ret = false;
       send_fmt(session->fd, "[ERROR] invalid command '%s'\n", self->name);
     }
-  send_eot(session->fd);
   return (ret);
 }
 

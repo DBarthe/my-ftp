@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Tue Apr  8 17:41:47 2014 Barthelemy Delemotte
-** Last update Tue Apr  8 18:40:58 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 13:36:24 2014 Barthelemy Delemotte
 */
 
 #include		<unistd.h>
@@ -27,16 +27,20 @@ static void		swing_resize(t_swing *self, size_t size)
   self->size = size;
 }
 
-void			swing_feed(t_swing *self, int fd)
+bool			swing_feed(t_swing *self, int fd)
 {
   static char		buffer[SWING_FEED_SIZE];
+  static int		no_activity_count = 0;
   ssize_t		ret;
   size_t		i;
 
   DEBUG_PRINT("swing feeding");
-  ret = read(fd, buffer, SWING_FEED_SIZE);
-  if (ret < 0)
+  if ((ret = read(fd, buffer, SWING_FEED_SIZE)) < 0)
     diep("read");
+  else if (ret > 0)
+    no_activity_count = 0;
+  else if (++no_activity_count > 10)
+    return (false);
   if (self->counter + (size_t)ret > self->size)
     swing_resize(self, self->counter + (size_t)ret);
   i = 0;
@@ -49,4 +53,5 @@ void			swing_feed(t_swing *self, int fd)
   self->input_idx = self->input_idx + i;
   if (self->counter < self->size)
     self->input_idx %= self->size;
+  return (true);
 }

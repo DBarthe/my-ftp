@@ -5,7 +5,7 @@
 ** Login   <delemo_b@epitech.net>
 **
 ** Started on Fri Apr 11 18:33:40 2014 Barthelemy Delemotte
-** Last update Fri Apr 11 22:35:31 2014 Barthelemy Delemotte
+** Last update Sun Apr 13 15:34:54 2014 Barthelemy Delemotte
 */
 
 #include		<stdlib.h>
@@ -13,6 +13,8 @@
 #include		<stdio.h>
 #include		<stdbool.h>
 #include		<fcntl.h>
+#include		<sys/stat.h>
+#include		<string.h>
 
 #include		"utils.h"
 #include		"socket.h"
@@ -24,19 +26,19 @@ static long long int	get_file_size(int fd)
 
   start = lseek(fd, 0, SEEK_CUR);
   end = lseek(fd, 0, SEEK_END);
-  lseek(fd, 0, SEEK_SET);
+  lseek(fd, start, SEEK_SET);
   return ((long long int)(end - start));
 }
 
-static void		send_data(int remote_fd, const char *buffer,
-				  long long int file_size)
+static void		file_padding(int fd, char val, size_t size)
 {
-  ssize_t		ret;
+  char			buffer[1024];
 
-  while (file_size > 0 && (ret = write(remote_fd, buffer, file_size)) > 0)
+  memset(buffer, val, size < 1024 ? size : 1024);
+  while (size > 0)
     {
-      file_size -= ret;
-      buffer += ret;
+      send_raw(fd, buffer, size < 1024 ? size : 1024);
+      size -= size < 1024 ? size : 1024;
     }
 }
 
@@ -44,22 +46,27 @@ bool			send_file(int remote_fd, const char *file)
 {
   long long int		file_size;
   int			file_fd;
-  char			*buffer;
+  char			buffer[1024];
+  ssize_t		ret;
+  struct stat		sb;
 
-  file_size = -1;
-  if ((file_fd = open(file, O_RDONLY)) == -1)
-    {
-      send_raw(remote_fd, (char *)&file_size, sizeof(long long int));
-      return (false);
-    }
-  file_size = get_file_size(file_fd);
-  if ((buffer = malloc(file_size  * sizeof(char))) == NULL)
-    die("malloc has failed");
+  file_size = 0;
+  if ((file_fd = open(file, O_RDONLY)) == -1
+      || fstat(file_fd, &sb) == -1
+      || (sb.st_mode & S_IFMT) != S_IFREG)
+    file_size = -1;
+  if (file_size == 0)
+    file_size = get_file_size(file_fd);
   send_raw(remote_fd, (char *)&file_size, sizeof(long long int));
-  if (read(file_fd, buffer, file_size) < 0)
+  if (file_size == -1)
     return (false);
-  send_data(remote_fd, buffer, file_size);
-  free(buffer);
+  while ((ret = read(file_fd, buffer, 1024)) > 0)
+    {
+      if (send_raw(remote_fd, buffer, ret) == false)
+	return (false);
+      file_size -= ret;
+    }
+  file_padding(remote_fd, 0, (size_t)file_size);
   close(file_fd);
   return (true);
 }
